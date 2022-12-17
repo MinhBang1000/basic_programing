@@ -10,10 +10,10 @@ package basic;
  * @author Administrator
  */
 public class Sort {
-    // GLOBAL VARIABLE
+// GLOBAL VARIABLE
     private static int MAX_INF = 99999;
     
-    // QUICK SORT 
+// QUICK SORT 
     public static int findPivot(int[] numbers, int start, int end) {
         int index = start;
         int top = numbers[start];
@@ -55,7 +55,7 @@ public class Sort {
         }
     }
     
-//    SELECTION SORT
+// SELECTION SORT
     public static void selectionSort(int[] numbers){
         for (int i=0;i<numbers.length-1;i++){
             int min = numbers[i];
@@ -72,7 +72,7 @@ public class Sort {
         }
     }
     
-//    INSERTION SORT
+// INSERTION SORT
     public static void insertionSort(int[] numbers) {
         for (int i=0;i<numbers.length;i++){
             int j = i - 1;
@@ -103,4 +103,52 @@ public class Sort {
         }
     }
     
+// MERGE SORT
+    public static void merge(int[] numbers, int left, int mid, int right){
+        // Initial two tempory list
+        int[] leftList = new int[numbers.length];
+        int[] rightList = new int[numbers.length];
+        int numLeft = mid - left + 1;
+        int numRight = right - mid;
+        // Copy element to 2 list above
+        for (int i=0;i<numLeft;i++) {
+            leftList[i] = numbers[left+i];
+        }
+        for (int i=0;i<numRight;i++){
+            rightList[i] = numbers[mid + i + 1];
+        }
+        // Merge two list
+        int i = 0,j = 0;
+        int k = left;
+        while (i < numLeft && j < numRight){
+            if (leftList[i] < rightList[j]){
+                numbers[k] = leftList[i];
+                i++;
+            }else{
+                numbers[k] = rightList[j];
+                j++;
+            }
+            k++;
+        }
+        // Continue with the rest of two list
+        while (i < numLeft){
+            numbers[k] = leftList[i];
+            i++;
+            k++;
+        }
+        while (j < numRight){
+            numbers[k] = rightList[j];
+            j++;
+            k++;
+        }
+    }
+    
+    public static void mergeSort(int [] numbers, int left, int right){
+        if (left < right){
+            int mid = left + (right - left)/2;
+            Sort.mergeSort(numbers, left, mid);
+            Sort.mergeSort(numbers, mid + 1, right);
+            Sort.merge(numbers, left, mid, right);
+        }
+    }
 }

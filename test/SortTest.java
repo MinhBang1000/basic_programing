@@ -92,4 +92,21 @@ public class SortTest {
         Sort.bubbleSort(actuals);
         Assert.assertArrayEquals("OK", expecteds, actuals);
     }
+    
+    @Test
+    public void mSortTest1() {
+        int[] expecteds = new int[]{8,13,20,40};
+        int[] actuals = new int[]{40,8,20,13};
+        Sort.mergeSort(actuals, 0, actuals.length-1);
+        Assert.assertArrayEquals("OK", expecteds, actuals);
+    }
+
+    
+        @Test
+    public void mSortTest2() {
+        int[] expecteds = new int[]{1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 6, 7};
+        int[] actuals = new int[]{2, 3, 3, 3, 3, 1, 4, 5, 6, 2, 1, 3, 5, 7};
+        Sort.mergeSort(actuals, 0, actuals.length-1);
+        Assert.assertArrayEquals("OK", expecteds, actuals);
+    }
 }
