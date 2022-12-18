@@ -42,4 +42,16 @@ public class CodeWarTest {
         int actual = CodeWar.multiplesOf3Or5(20);
         Assert.assertEquals(78, actual);
     }
+    
+    @Test
+    public void pigItTest1(){
+        String test = CodeWar.pigIt("Pig latin is cool");
+        Assert.assertEquals("igPay atinlay siay oolcay", test);
+    }
+    
+        @Test
+    public void pigItTest2(){
+        String test = CodeWar.pigIt("Hello world !");
+        Assert.assertEquals("elloHay orldway !", test);
+    }
 }

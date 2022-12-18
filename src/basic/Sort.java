@@ -10,42 +10,93 @@ package basic;
  * @author Administrator
  */
 public class Sort {
-// GLOBAL VARIABLE
-    private static int MAX_INF = 99999;
-    
-// QUICK SORT 
+// SELECTION SORT
+
+    public static void selectionSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = arr[i];
+            int index = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (min > arr[j]) {
+                    min = arr[j];
+                    index = j;
+                }
+            }
+            if (index != i) {
+                arr[index] += arr[i];
+                arr[i] = arr[index] - arr[i];
+                arr[index] -= arr[i];
+            }
+        }
+    }
+
+// INSERTION SORT
+    public static void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int j = i;
+            while (j > 0 && arr[j] < arr[j - 1]) {
+                arr[j] += arr[j - 1];
+                arr[j - 1] = arr[j] - arr[j - 1];
+                arr[j] -= arr[j - 1];
+                j--;
+            }
+        }
+    }
+
+// BUBBLE SORT
+    public static void bubbleSort(int[] arr) {
+        boolean swapped = true;
+        int last = arr.length - 1;
+        while (swapped) {
+            swapped = false;
+            for (int i = 0; i < last; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    int temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+            last--;
+        }
+    }
+
+// QUICK SORT
     public static int findPivot(int[] numbers, int start, int end) {
+        int firstKey = numbers[start];
         int index = start;
-        int top = numbers[start];
-        while (top == numbers[index] && index < end) {
+        while (numbers[index] == firstKey && index < end) {
             index++;
         }
-        if (index == end && numbers[index] == top) {
+        if (index == end && numbers[index] == firstKey) {
             return -1;
+            // Not found a pivot
         }
-        if (numbers[index] <= top) {
+        if (numbers[index] < firstKey) {
             return start;
         }
         return index;
     }
 
     public static int partitionList(int[] numbers, int pivot, int left, int right) {
-        while (left < right) {
-            while (numbers[left] < pivot && left <= right) {
-                left++;
+        int l = left;
+        int r = right;
+        while (l < r) {
+            while (numbers[l] < pivot && l <= r) {
+                l++;
             }
-            while (numbers[right] >= pivot && left <= right) {
-                right--;
+            while (numbers[r] >= pivot && l <= r) {
+                r--;
             }
-            if (left < right) {
-                int temp = numbers[left];
-                numbers[left] = numbers[right];
-                numbers[right] = temp;
+            if (l < r) {
+                numbers[l] += numbers[r];
+                numbers[r] = numbers[l] - numbers[r];
+                numbers[l] -= numbers[r];
             }
         }
-        return left;
+        return l;
     }
-    
+
     public static void quickSort(int[] numbers, int left, int right) {
         int index = Sort.findPivot(numbers, left, right);
         if (index != -1) {
@@ -54,101 +105,67 @@ public class Sort {
             Sort.quickSort(numbers, k, right);
         }
     }
-    
-// SELECTION SORT
-    public static void selectionSort(int[] numbers){
-        for (int i=0;i<numbers.length-1;i++){
-            int min = numbers[i];
-            int index = i;
-            for (int j=i+1;j<numbers.length;j++){
-                if (min > numbers[j]){
-                    index = j;
-                    min = numbers[j];
-                }
-            }
-            int temp = numbers[i];
-            numbers[i] = numbers[index];
-            numbers[index] = temp;
-        }
-    }
-    
-// INSERTION SORT
-    public static void insertionSort(int[] numbers) {
-        for (int i=0;i<numbers.length;i++){
-            int j = i - 1;
-            int key = numbers[i];
-            while (j>=0 && numbers[j] > key) {
-                int temp = numbers[j];
-                numbers[j] = numbers[j+1];
-                numbers[j+1] = temp;
-                j--;
-            }
-        }
-    }
-    
-// BUBBLE SORT
-    public static void bubbleSort(int[] numbers){
-        boolean flag = true;
-        int last = numbers.length - 1;
-        while (flag) {
-            flag = false;
-            for (int i=0;i<last;i++){
-                if (numbers[i] > numbers[i+1]) {
-                    numbers[i] = numbers[i] + numbers[i+1];
-                    numbers[i+1] = numbers[i] - numbers[i+1];
-                    numbers[i] = numbers[i] - numbers[i+1];
-                    flag = true;
-                }
-            }
-        }
-    }
-    
-// MERGE SORT
-    public static void merge(int[] numbers, int left, int mid, int right){
-        // Initial two tempory list
-        int[] leftList = new int[numbers.length];
-        int[] rightList = new int[numbers.length];
+
+//  MERGE SORT
+    public static void mergeList(int[] arr, int left, int mid, int right) {
         int numLeft = mid - left + 1;
         int numRight = right - mid;
-        // Copy element to 2 list above
-        for (int i=0;i<numLeft;i++) {
-            leftList[i] = numbers[left+i];
+        int[] leftList = new int[arr.length];
+        int[] rightList = new int[arr.length];
+        // Copy elements of total list
+        for (int i = 0; i < numLeft; i++) {
+            leftList[i] = arr[left + i];
         }
-        for (int i=0;i<numRight;i++){
-            rightList[i] = numbers[mid + i + 1];
+        for (int i = 0; i < numRight; i++) {
+            rightList[i] = arr[mid + 1 + i];
         }
-        // Merge two list
-        int i = 0,j = 0;
+        int l = 0;
+        int r = 0;
         int k = left;
-        while (i < numLeft && j < numRight){
-            if (leftList[i] < rightList[j]){
-                numbers[k] = leftList[i];
-                i++;
-            }else{
-                numbers[k] = rightList[j];
-                j++;
+        while (l < numLeft && r < numRight) {
+            if (leftList[l] < rightList[r]) {
+                arr[k] = leftList[l];
+                l++;
+            } else {
+                arr[k] = rightList[r];
+                r++;
             }
             k++;
         }
-        // Continue with the rest of two list
-        while (i < numLeft){
-            numbers[k] = leftList[i];
-            i++;
+        // The rest collect
+        while (l < numLeft) {
+            arr[k] = leftList[l];
+            l++;
             k++;
         }
-        while (j < numRight){
-            numbers[k] = rightList[j];
-            j++;
+        while (r < numRight) {
+            arr[k] = rightList[r];
+            r++;
             k++;
         }
     }
-    
-    public static void mergeSort(int [] numbers, int left, int right){
-        if (left < right){
-            int mid = left + (right - left)/2;
-            Sort.mergeSort(numbers, left, mid);
-            Sort.mergeSort(numbers, mid + 1, right);
-            Sort.merge(numbers, left, mid, right);
+
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            Sort.mergeSort(arr, left, mid);
+            Sort.mergeSort(arr, mid + 1, right);
+            Sort.mergeList(arr, left, mid, right);
         }
+    }
+
+//    BINARY SEARCH
+    public static int binarySearch(int[] arr, int x, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            if (x == arr[mid]) {
+                return mid;
+            }
+            if (arr[mid] < x) {
+                return binarySearch(arr, x, mid + 1, right);
+            }
+            return binarySearch(arr, x, left, mid);
+        }
+        return -1;
     }
 }
