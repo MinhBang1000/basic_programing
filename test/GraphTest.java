@@ -25,15 +25,25 @@ public class GraphTest {
     public void breathFirstSearchTest1() {
         Graph g = new Graph();
         g.readGraph();
+        System.out.print("Breath First Search:");
         g.breathFirstSearch(1);
+        System.out.printf("\n");
     }
     
     @Test
     public void traversalTest1() {
-//        System.out.println();
         Graph g = new Graph();
         g.readGraph();
+        System.out.print("Breath First Search:");
         g.traversalGraph(1);
     }
+    
+    @Test
+    public void dijkstraTest1(){
+        Graph g = new Graph();
+        g.readGraph();
+        System.out.print("\nShortest Path - Dijkstra:");
+        g.dijkstra(1);
+    } 
     
 }

@@ -21,6 +21,7 @@ public class Graph {
     private int[][] data;
     private boolean[] mark;
     private int n;
+    private static int INF = 9999;
 
     // Start at one
     public void initGraph(int n) {
@@ -107,6 +108,59 @@ public class Graph {
                 int item = adj.get(i);
                 this.traversalGraph(item);
             }
+        }
+    }
+    
+    public String findWay(int node, int[] parent){
+        // Must have the parent array before
+        String temp = "";
+        int end = node;
+        while (node != -1){
+            node = parent[node];
+            if (node != -1)
+                temp = node + " -> " + temp;
+        } 
+        temp += end;
+        return temp;
+    }
+    
+    public void dijkstra(int startNode) {
+        // Init
+        boolean[] mark = new boolean[this.n+1];
+        int[] pi = new int[this.n+1];
+        int[] parent = new int[this.n+1];
+        for (int i=1;i<=this.n;i++) {
+            mark[i] = false; 
+            pi[i] = INF;
+            parent[i] = -2;
+        }
+        pi[startNode] = 0;
+        parent[startNode] = -1;
+        // List
+        for (int it=0;it<this.n;it++){
+            int minPi = INF;
+            int j = 1;
+            for (int i=1;i<=this.n;i++){
+                if (!mark[i] && minPi > pi[i]) {
+                    minPi = pi[i];
+                    j = i;
+                }
+            }
+            mark[j] = true;
+            ArrayList<Integer> adj = this.neighbors(j);
+            for (int i=0;i<adj.size();i++){
+                int y = adj.get(i);
+                if (!mark[y] && pi[y] > pi[j] + this.data[j][y]) {
+                    pi[y] = pi[j] + this.data[j][y];
+                    parent[y] = j;
+                }
+            }
+        }
+        
+        // Print
+        System.out.printf("\n");
+        for (int i=1;i<=this.n;i++){
+            System.out.printf("pi[%d] = %d - parent[%d] = %d - %s\n", i,pi[i],i,parent[i], this.findWay(i, parent));
         }
     }
 }
