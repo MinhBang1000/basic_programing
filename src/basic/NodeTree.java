@@ -5,38 +5,27 @@
  */
 package basic;
 
+import java.util.List;
+
 /**
  *
  * @author Administrator
  */
 public class NodeTree {
-    private String data;
-    private int parent;
+
     private boolean mark;
-    private int id;
-    private static int increment = 0;
+    private String value;
+    private int parent;
 
-    public NodeTree(String data, int parent, boolean mark) {
-        this.data = data;
-        this.parent = parent;
+    public NodeTree() {
+        this.mark = false;
+        this.value = "none";
+        this.parent = -1;
+    }
+
+    public NodeTree(boolean mark, String value, int parent) {
         this.mark = mark;
-        this.id = increment;
-        increment ++;
-    }
-    
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public int getParent() {
-        return parent;
-    }
-
-    public void setParent(int parent) {
+        this.value = value;
         this.parent = parent;
     }
 
@@ -48,16 +37,20 @@ public class NodeTree {
         this.mark = mark;
     }
 
-    public int getId() {
-        return id;
+    public String getValue() {
+        return value;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setValue(String value) {
+        this.value = value;
     }
-    
-    public String toString(){
-        return "ID: "+this.getId();
+
+    public int getParent() {
+        return parent;
     }
-    
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
 }

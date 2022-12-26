@@ -6,8 +6,11 @@
 
 import basic.TreeFolder;
 import basic.NodeTree;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,18 +21,21 @@ import static org.junit.Assert.*;
  * @author Administrator
  */
 public class TreeFolderTest {
-    
+
     @Test
     public void test1() {
-        TreeFolder.folders.add(new NodeTree("A", -1, false));
-        TreeFolder.folders.add(new NodeTree("B", 0, false));
-        TreeFolder.folders.add(new NodeTree("C", 0, false));
-        TreeFolder.folders.add(new NodeTree("D", 0, false));
-        TreeFolder.folders.add(new NodeTree("E", 2, false));
-        TreeFolder.folders.add(new NodeTree("F", 2, false));
-        TreeFolder.folders.add(new NodeTree("G", 3, false));
-//        System.out.println(TreeFolder.folders);
-        int first = 0;
-        TreeFolder.printTreeFolder(TreeFolder.folders.get(first));
+        TreeFolder tree = new TreeFolder();
+        tree.readFolders();
+        tree.printFolders(0);
+        String expected = 
+                  "-A\n"
+                + "--B\n"
+                + "--C\n"
+                + "---E\n"
+                + "---F\n"
+                + "--D\n"
+                + "---G\n"
+                + "---H";
+        Assert.assertEquals(expected, tree.getStructure());
     }
 }

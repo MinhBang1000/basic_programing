@@ -106,12 +106,4 @@ public class SortTest {
         Sort.mergeSort(actuals, 0, actuals.length - 1);
         Assert.assertArrayEquals("OK", expecteds, actuals);
     }
-    
-    @Test
-    public void binarySearchTest1() {
-        int expecteds = 1;
-        int [] actuals = new int[] {1,4,3,5,6};
-        Sort.bubbleSort(actuals);
-        Assert.assertEquals(expecteds, Sort.binarySearch(actuals, 3, 0, actuals.length-1));
-    }
 }
