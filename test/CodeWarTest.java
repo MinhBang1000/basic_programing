@@ -104,7 +104,6 @@ public class CodeWarTest {
 
     public void test(int[][] array, int[] result) {
         String text = int2dToString(array) + " should be sorted to " + Arrays.toString(result);
-//        System.out.println(text);
         Assert.assertArrayEquals(result, CodeWar.snail(array));
         CodeWar.travelEdge(array, 0, array.length - 1, 0, array[0].length - 1);
     }
@@ -123,9 +122,16 @@ public class CodeWarTest {
 
     @Test
     public void weightSortTest1() {
-        System.out.println("****** Basic Tests ******");
         assertEquals("2000 103 123 4444 99", CodeWar.orderWeight("103 123 4444 99 2000"));
         assertEquals("11 11 2000 10003 22 123 1234000 44444444 9999", CodeWar.orderWeight("2000 10003 1234000 44444444 9999 11 11 22 123"));
         assertEquals("1 2 200 4 4 6 6 7 7 18 27 72 81 9 91 425 31064 7920 67407 96488 34608557 71899703", CodeWar.orderWeight("71899703 200 6 91 425 4 67407 7 96488 6 4 2 7 31064 9 7920 1 34608557 27 72 18 81"));
+    }
+
+//    @Test
+    public void mazeShortestPathTest1() {
+        String strMaze = ".W.\n"
+                + ".W.\n"
+                + "...";
+        CodeWar.mazeShortestPath(strMaze);
     }
 }
