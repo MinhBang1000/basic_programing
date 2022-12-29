@@ -13,6 +13,10 @@ import java.util.Stack;
  */
 public class Bracket {
     
+    public static boolean validParentthesesV2(String parens) {
+        
+        return true;
+    }
     
     public static boolean validParentheses(String parens) {
         String brackets = parens;

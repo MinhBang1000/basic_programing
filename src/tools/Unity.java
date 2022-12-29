@@ -23,4 +23,10 @@ public class Unity {
     public static void printList(List<Integer> lst) {
         lst.forEach(item -> System.out.print(item + " "));
     }
+    
+    public static void swap(int[] arr, int a, int b) {
+        int t = arr[a];
+        arr[a] = arr[b];
+        arr[b] = t;
+    }
 }

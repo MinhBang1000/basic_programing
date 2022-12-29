@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import tools.Unity;
 
 /**
  *
@@ -273,124 +274,38 @@ public class CodeWar {
         });
         return String.join(" ", split);
     }
-    
-    // Maze + Shortest path
-    // Init 2D array of String  
-    // Start at zero
-    public static int[][] data;
-    public static int n;
-    public static String maze = "";
-    public static int shortestPath = 0;
 
-    public static List<Integer> friends(int index) {
-        // start at one
-        List<Integer> temp = new ArrayList<>();
-        char point = maze.charAt(index);
-        if (point != 'W') {
-            // Have relationship
-            // left check
-            if (index % n != 0) {
-                temp.add(index - 1);
-            }
-            // right check
-            if ((index + 1) % n != 0) {
-                temp.add(index + 1);
-            }
-            // top check
-            if (index - n >= 0) {
-                temp.add(index - n);
-            }
-            // bottom check
-            if (index + n < n * n) {
-                temp.add(index + n);
-            }
-        }
-        return temp;
-    }
-
-    public static void initMaze(String strMaze) {
-        // number of rows or columns
-        n = 0;
-        for (int i = 0; i < strMaze.length(); i++) {
-            if (strMaze.charAt(i) != '\n') {
-                maze += strMaze.charAt(i);
-            } else {
-                n++;
-            }
-        }
-        n++;
-        data = new int[n * n][n * n];
-        for (int i = 0; i < n * n; i++) {
-            for (int j = 0; j < n * n; j++) {
-                data[i][j] = -1;
-                // non relationship
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            List<Integer> friends = friends(i);
-            for (int j : friends) {
-                if (maze.charAt(j) != 'W') {
-                    data[i][j] = 1;
-                    data[j][i] = 1;
+    public static int[] threeMaxNumbers(int[] arr) {
+        List<Integer> maxNumbers = new ArrayList<>();
+        maxNumbers.add(arr[0]);
+        for (int t : arr) {
+            if (maxNumbers.get(0) < t && !maxNumbers.contains(t)) {
+                maxNumbers.add(0, t);
+                if (maxNumbers.size() > 3) {
+                    maxNumbers.remove(maxNumbers.size() - 1);
                 }
             }
         }
-
+        int[] result = new int[maxNumbers.size()];
+        for (int i = 0; i < maxNumbers.size(); i++) {
+            result[i] = maxNumbers.get(i);
+        }
+        return result;
     }
 
-    // Graph
-    public static List<Integer> adjacent(int index) {
-        List<Integer> temp = new ArrayList<>();
-        for (int i = 0; i < n * n; i++) {
-            for (int j = 0; j < n * n; j++) {
-                if (data[i][j] != -1) {
-                    temp.add(j);
-                }
+    public static void oneLoopSort(int[] arr) {
+        int j = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (j == arr.length - 1) {
+                break;
             }
-        }
-        return temp;
-    }
-
-    public static boolean[] mark;
-    public static int[] pi;
-    public static int[] p;
-
-    public static void djikstra(int start) {
-        mark = new boolean[n * n];
-        pi = new int[n * n];
-        p = new int[n * n];
-        for (int i = 0; i < n * n; i++) {
-            mark[i] = false;
-            pi[i] = -9999;
-            p[i] = -1;
-        }
-        pi[start] = 0;
-        p[start] = -1;
-        for (int it = 0; it < n * n; it++) {
-            int minPi = 9999;
-            int j = 1;
-            for (int i = 0; i < n * n; i++) {
-                if (!mark[i] && pi[i] < minPi) {
-                    minPi = pi[i];
-                    j = i;
-                }
+            if (arr[j] > arr[i]) {
+                Unity.swap(arr, i, j);
             }
-            mark[j] = true;
-            List<Integer> friends = adjacent(j);
-            for (int i = 0; i < friends.size(); i++) {
-                int y = friends.get(i);
-                if (!mark[y] && pi[y] > pi[j] + data[j][y]) {
-                    pi[y] = pi[j] + data[j][y];
-                    p[y] = j;
-                }
+            if (i == arr.length - 1) {
+                j++;
+                i = j;
             }
         }
     }
-
-    public static void mazeShortestPath(String strMaze) {
-        initMaze(strMaze);
-        djikstra(0);
-        System.out.println(pi[n - 1]);
-    }
-
 }

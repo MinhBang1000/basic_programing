@@ -127,11 +127,26 @@ public class CodeWarTest {
         assertEquals("1 2 200 4 4 6 6 7 7 18 27 72 81 9 91 425 31064 7920 67407 96488 34608557 71899703", CodeWar.orderWeight("71899703 200 6 91 425 4 67407 7 96488 6 4 2 7 31064 9 7920 1 34608557 27 72 18 81"));
     }
 
-//    @Test
-    public void mazeShortestPathTest1() {
-        String strMaze = ".W.\n"
-                + ".W.\n"
-                + "...";
-        CodeWar.mazeShortestPath(strMaze);
+    @Test
+    public void threeMaxNumbersTest1() {
+        int[] arr = new int[]{1, 2, 3, 4, 5, 6, 6, 5, 4};
+        int[] expecteds = new int[]{6, 5, 4};
+        Assert.assertArrayEquals(expecteds, CodeWar.threeMaxNumbers(arr));
+    }
+
+    @Test
+    public void oneLoopSortTest1() {
+        int[] actuals = new int[]{40, 13, 8, 21};
+        int[] expecteds = new int[]{8, 13, 21, 40};
+        CodeWar.oneLoopSort(actuals);
+        Assert.assertArrayEquals(expecteds, actuals);
+    }
+
+    @Test
+    public void oneLoopSortTest2() {
+        int[] expecteds = new int[]{1, 2, 3, 3, 3, 3, 4, 5};
+        int[] actuals = new int[]{2, 3, 3, 3, 3, 1, 4, 5};
+        CodeWar.oneLoopSort(actuals);
+        Assert.assertArrayEquals(expecteds, actuals);
     }
 }
