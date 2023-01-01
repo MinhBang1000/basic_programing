@@ -24,6 +24,14 @@ public class Unity {
         lst.forEach(item -> System.out.print(item + " "));
     }
     
+    public static void printList(int[][] arr) {
+        for (int i=0;i<arr.length;i++) {
+            for (int j=0;j<arr[0].length;j++){
+                System.out.println(arr[i][j]);
+            }
+        }
+    }
+    
     public static void swap(int[] arr, int a, int b) {
         int t = arr[a];
         arr[a] = arr[b];

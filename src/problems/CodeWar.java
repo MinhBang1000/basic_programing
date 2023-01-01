@@ -424,4 +424,31 @@ public class CodeWar {
         invertNodeTree(root, newTree);
         return (root == null) ? root : newTree;
     }
+    
+    public static String toHexConverter(int n) {
+        n = (n>255) ? 255 : n;
+        n = (n<0) ? n - n : n;
+        String t = Integer.toHexString(n).toUpperCase();
+        return (t.length() == 1) ? "0"+t : t;
+    }
+
+    public static String rgb(int r, int g, int b) {
+        return toHexConverter(r) + toHexConverter(g) + toHexConverter(b);
+    }
+    
+    public static int[][] multiplicationTable(int n) {
+        int[][] t = new int[n][n];
+        int j = 0, k = 0;
+        for (int i=0;i<n;i++) {
+            if (k==n*n) break;
+            t[j][i] = (j+1) * (i+1);
+            if (i == n-1) {
+                i = -1;
+                j += 1;
+            }
+            k++;
+        }
+        return t;
+    }
+
 }

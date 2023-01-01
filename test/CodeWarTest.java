@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import problems.CodeWar;
+import tools.Unity;
 
 /**
  *
@@ -181,15 +182,15 @@ public class CodeWarTest {
         }
 
         if ((expectedTree.left == null && userTree.left != null) || (expectedTree.left != null && userTree.left == null)) {
-            Assert.assertFalse("left null node and none null node found",true);
-       
+            Assert.assertFalse("left null node and none null node found", true);
+
         }
 
         if ((expectedTree.right == null && userTree.right != null) || (expectedTree.right != null && userTree.right == null)) {
             Assert.assertFalse("right null node and none null node found", true);
         }
 
-        Assert.assertEquals("values do not match",expectedTree.value, userTree.value);
+        Assert.assertEquals("values do not match", expectedTree.value, userTree.value);
 
         if (expectedTree.left != null) {
             assertTreeEqual(expectedTree.left, userTree.left);
@@ -211,5 +212,26 @@ public class CodeWarTest {
         expected.left = new TreeNode(7, new TreeNode(9), new TreeNode(6));
 
         assertTreeEqual(expected, CodeWar.invertTree(given));
+    }
+
+    @Test
+    public void rgbToHexTest1() {
+        Assert.assertEquals("For input: (0, 0, 0)", "000000", CodeWar.rgb(0, 0, 0));
+        Assert.assertEquals("For input: (1, 2, 3)", "010203", CodeWar.rgb(1, 2, 3));
+        Assert.assertEquals("For input: (255, 255, 255)", "FFFFFF", CodeWar.rgb(255, 255, 255));
+        Assert.assertEquals("For input: (254, 253, 252)", "FEFDFC", CodeWar.rgb(254, 253, 252));
+        Assert.assertEquals("For input: (-20, 275, 125)", "00FF7D", CodeWar.rgb(-20, 275, 125));
+    }
+
+    @Test
+    public void multiplicationTableTest1() {
+        int[][] test1 = {{1}};
+        assertArrayEquals(test1, CodeWar.multiplicationTable(1));
+    }
+
+    @Test
+    public void multiplicationTableTest2() {
+        int[][] test = {{1, 2, 3}, {2, 4, 6}, {3, 6, 9}};
+        assertArrayEquals(test, CodeWar.multiplicationTable(3));
     }
 }
