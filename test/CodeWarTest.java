@@ -6,6 +6,7 @@
 
 import java.util.Arrays;
 import static java.util.stream.Collectors.joining;
+import problems.Structure.TreeNode;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -148,5 +149,67 @@ public class CodeWarTest {
         int[] actuals = new int[]{2, 3, 3, 3, 3, 1, 4, 5};
         CodeWar.oneLoopSort(actuals);
         Assert.assertArrayEquals(expecteds, actuals);
+    }
+
+    @Test
+    public void validParentheseTest1() {
+        Assert.assertEquals(true, CodeWar.validParentheses("()"));
+        Assert.assertEquals(false, CodeWar.validParentheses("())"));
+        Assert.assertEquals(true, CodeWar.validParentheses("32423(sgsdg)"));
+        Assert.assertEquals(false, CodeWar.validParentheses("(dsgdsg))2432"));
+        Assert.assertEquals(true, CodeWar.validParentheses("adasdasfa"));
+    }
+
+    @Test
+    public void fibonancciTest1() {
+        Assert.assertEquals(55, CodeWar.fibonancci(10));
+    }
+
+    @Test
+    public void fibonancciTest2() {
+        Assert.assertEquals(55, CodeWar.fibo(10));
+    }
+
+    @Test
+    public void factorialTest1() {
+        Assert.assertEquals(3628800, CodeWar.factorial(10));
+    }
+
+    private void assertTreeEqual(TreeNode expectedTree, TreeNode userTree) {
+        if (expectedTree == null || userTree == null) {
+            return;
+        }
+
+        if ((expectedTree.left == null && userTree.left != null) || (expectedTree.left != null && userTree.left == null)) {
+            Assert.assertFalse("left null node and none null node found",true);
+       
+        }
+
+        if ((expectedTree.right == null && userTree.right != null) || (expectedTree.right != null && userTree.right == null)) {
+            Assert.assertFalse("right null node and none null node found", true);
+        }
+
+        Assert.assertEquals("values do not match",expectedTree.value, userTree.value);
+
+        if (expectedTree.left != null) {
+            assertTreeEqual(expectedTree.left, userTree.left);
+        }
+
+        if (expectedTree.right != null) {
+            assertTreeEqual(expectedTree.right, userTree.right);
+        }
+    }
+
+    @Test
+    public void binaryTreeInvertTest1() {
+        TreeNode given = new TreeNode(4);
+        given.left = new TreeNode(2, new TreeNode(1), new TreeNode(3));
+        given.right = new TreeNode(7, new TreeNode(6), new TreeNode(9));
+
+        TreeNode expected = new TreeNode(4);
+        expected.right = new TreeNode(2, new TreeNode(3), new TreeNode(1));
+        expected.left = new TreeNode(7, new TreeNode(9), new TreeNode(6));
+
+        assertTreeEqual(expected, CodeWar.invertTree(given));
     }
 }

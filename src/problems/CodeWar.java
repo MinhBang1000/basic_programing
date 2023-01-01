@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import problems.Structure.TreeNode;
 import tools.Unity;
 
 /**
@@ -180,9 +181,6 @@ public class CodeWar {
                 temp = travelEdge(array, top, bottom, left, right);
             }
         } while (!temp.isEmpty());
-//        for (int t : result) {
-//            System.out.println(t);
-//        }
         return result;
     }
 
@@ -220,7 +218,6 @@ public class CodeWar {
     }
 
     public static String orderWeight(String str) {
-        System.out.println(str);
         List<String> arr = Arrays.asList(str.split(" "));
         List<List<String>> totalArr = new ArrayList<>();
         for (String item : arr) {
@@ -258,7 +255,6 @@ public class CodeWar {
         for (List<String> itemStr : totalArr) {
             temp += itemStr.get(0) + " ";
         }
-        System.out.println(temp);
         return temp.substring(0, temp.length() - 1);
     }
 
@@ -307,5 +303,125 @@ public class CodeWar {
                 i = j;
             }
         }
+    }
+
+    public static boolean validParentheses(String parens) {
+        // Stack method
+//        Stack<Character> stack = new Stack();
+//        char open = '(';
+//        char close = ')';
+//        boolean result = true;
+//        int i=0;
+//        while (i<parens.length() && result) {
+//            char t = parens.charAt(i);
+//            if (t == open) {
+//                stack.push(t);
+//            }else{
+//                if (t == close){
+//                    if (stack.isEmpty()) {
+//                        result = false;
+//                    }else{
+//                        stack.pop();
+//                    }
+//                }
+//            }
+//            i++;
+//        }
+//        if (!stack.isEmpty()) {
+//            result = false;
+//        }
+//        return result;
+        // count method
+        int count = 0;
+        char open = '(';
+        char close = ')';
+        for (int i = 0; i < parens.length(); i++) {
+            char t = parens.charAt(i);
+            if (t == open) {
+                count++;
+            } else {
+                if (t == close) {
+                    count--;
+                }
+            }
+            if (count < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int fibonancci(int number) {
+        int n = number;
+        Stack<Integer> stack = new Stack();
+        int sum = 0;
+        do {
+            if (n == 0 || n == 1) {
+                sum += n;
+            } else {
+                stack.push(n - 1);
+                stack.push(n - 2);
+            }
+            if (!stack.isEmpty()) {
+                n = stack.pop();
+            } else {
+                break;
+            }
+        } while (true);
+        return sum;
+    }
+
+    public static int fibo(int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        return fibo(n - 1) + fibo(n - 2);
+    }
+
+    public static int factorial(int n) {
+        if (n == 1) {
+            return n;
+        }
+        return n * factorial(n - 1);
+    }
+
+    public static TreeNode createTree() {
+        TreeNode given = new TreeNode(4);
+        given.left = new TreeNode(2, new TreeNode(1), new TreeNode(3));
+        given.right = new TreeNode(7, new TreeNode(6), new TreeNode(9));
+        return given;
+    }
+
+    public static void travelTree(TreeNode node) {
+        if (node != null) {
+            System.out.println(node.value);
+            travelTree(node.left);
+            travelTree(node.right);
+        }
+    }
+
+    public static boolean invertNodeTree(TreeNode node, TreeNode newTree) {
+        boolean flag = false;
+        if (node != null) {
+            newTree.value = node.value;
+            newTree.left = new TreeNode(0);
+            boolean leftCheck = invertNodeTree(node.right, newTree.left);
+            if (!leftCheck) {
+                newTree.left = null;
+            }
+            newTree.right = new TreeNode(0);
+            boolean rightCheck = invertNodeTree(node.left, newTree.right);
+            if (!rightCheck) {
+                newTree.right = null;
+            }
+            flag = true;
+        }
+        return flag;
+    }
+
+    public static TreeNode invertTree(TreeNode root) {
+        TreeNode newTree = new TreeNode(0);
+        invertNodeTree(root, newTree);
+        return (root == null) ? root : newTree;
     }
 }
