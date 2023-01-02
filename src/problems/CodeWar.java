@@ -424,31 +424,61 @@ public class CodeWar {
         invertNodeTree(root, newTree);
         return (root == null) ? root : newTree;
     }
-    
+
     public static String toHexConverter(int n) {
-        n = (n>255) ? 255 : n;
-        n = (n<0) ? n - n : n;
+        n = (n > 255) ? 255 : n;
+        n = (n < 0) ? n - n : n;
         String t = Integer.toHexString(n).toUpperCase();
-        return (t.length() == 1) ? "0"+t : t;
+        return (t.length() == 1) ? "0" + t : t;
     }
 
     public static String rgb(int r, int g, int b) {
         return toHexConverter(r) + toHexConverter(g) + toHexConverter(b);
     }
-    
+
     public static int[][] multiplicationTable(int n) {
         int[][] t = new int[n][n];
         int j = 0, k = 0;
-        for (int i=0;i<n;i++) {
-            if (k==n*n) break;
-            t[j][i] = (j+1) * (i+1);
-            if (i == n-1) {
+        for (int i = 0; i < n; i++) {
+            if (k == n * n) {
+                break;
+            }
+            t[j][i] = (j + 1) * (i + 1);
+            if (i == n - 1) {
                 i = -1;
                 j += 1;
             }
             k++;
         }
         return t;
+    }
+
+    public static boolean isOpposite(String str) {
+        return (str.equals("WESTEAST") || str.equals("EASTWEST")) || (str.equals("NORTHSOUTH") || str.equals("SOUTHNORTH"));
+    }
+
+    public static String[] dirReduc(String[] arr) {
+        Stack<String> stack = new Stack();
+        String previous = "";
+        for (String str : arr) {
+            if (stack.isEmpty()) {
+                stack.push(str);
+            } else {
+                if (isOpposite(previous + str)) {
+                    stack.pop();
+                } else {
+                    stack.push(str);
+                }
+            }
+            previous = (stack.isEmpty()) ? "" : stack.elementAt(stack.size() - 1);
+        }
+        String[] result = new String[stack.size()];
+        int i = stack.size() - 1;
+        while (!stack.isEmpty()) {
+            result[i] = stack.pop();
+            i--;
+        }
+        return result;
     }
 
 }

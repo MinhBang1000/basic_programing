@@ -234,4 +234,16 @@ public class CodeWarTest {
         int[][] test = {{1, 2, 3}, {2, 4, 6}, {3, 6, 9}};
         assertArrayEquals(test, CodeWar.multiplicationTable(3));
     }
+
+    @Test
+    public void directionReductionTest1() {
+        assertArrayEquals("\"NORTH\", \"SOUTH\", \"SOUTH\", \"EAST\", \"WEST\", \"NORTH\", \"WEST\"",
+                new String[]{"WEST"},
+                CodeWar.dirReduc(new String[]{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"}));
+        assertArrayEquals("\"NORTH\",\"SOUTH\",\"SOUTH\",\"EAST\",\"WEST\",\"NORTH\"",
+                new String[]{},
+                CodeWar.dirReduc(new String[]{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH"}));
+//        String[] arr = CodeWar.dirReduc(new String[]{"EAST", "EAST", "WEST", "NORTH", "WEST", "EAST", "EAST", "SOUTH", "NORTH", "WEST"});
+//        Arrays.stream(arr).forEach(System.out::println);
+    }   
 }
